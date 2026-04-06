@@ -2,6 +2,10 @@
 
 Standalone MQTT simulator that pairs with `aos-backend` `CommAdapterImpl` (v2.1): it **subscribes** to `order` and `instantActions`, and **publishes** `connection`, `state`, and `visualization` on the same `topicPrefix` the vehicle uses in AOS.
 
+## AOS 后端代码位置（联调参考）
+
+YFAOS 小车调度系统后端本地路径：**`D:\source\yeefung\YFAOS\aos-backend\`**。该目录包含 AOS 与 VDA5050 的通信实现，以及 AOS 内置的小车模拟器；可与本仓库 MQTT 模拟器对照阅读、联调。
+
 ## Build
 
 ```bash
