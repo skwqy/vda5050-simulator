@@ -1,0 +1,58 @@
+# VDA5050 simulator — defaults aligned with YFAOS CommAdapterImpl (v2.1)
+# Topic layout: {interfaceName}/v{major}/{manufacturer}/{serialNumber}/{suffix}
+#
+# MQTT direction vs AOS:
+#   Simulator PUBLISHES (adapter subscribes): connection (QoS1), state (QoS0), visualization (QoS0)
+#   Simulator SUBSCRIBES (adapter publishes): order (QoS1), instantActions (QoS1)
+
+mqtt:
+  brokerUri: "tcp://127.0.0.1:1883"
+  # Suggest aligning with the simulated vehicle id, e.g. Vehicle_2
+  clientId: "vda5050-sim-Vehicle_2"
+  username: null
+  password: null
+
+  # Mirrors ProcessModelImpl / CommAdapterImpl topic prefix — must match the vehicle in AOS
+  interfaceName: "defaultInterface"
+  majorVersion: 2
+  manufacturer: "defaultManufacturer"
+  serialNumber: "Vehicle_2"
+
+  # Per-topic QoS (same numeric values as Eclipse Paho: 0, 1, 2)
+  publish:
+    connection: 1   # AT_LEAST_ONCE — matches adapter subscribe
+    state: 0        # AT_MOST_ONCE
+    visualization: 0
+  subscribe:
+    order: 1
+    instantActions: 1
+
+# OpenTCS 6 driving course (optional). When set, motion follows path POLYPATH / BEZIER geometry
+# using the same layout→world transform as aos-backend AgvCommunicationAdapter (layoutScaleMm / flipY).
+map:
+  # Relative to working directory when running from vda5050-simulator/ (e.g. mvn exec:java).
+  # Place the same OpenTCS XML as AOS uses at maps/active.xml — see maps/README.md
+  xmlPath: "maps/youle-final-1.xml"
+  # xmlPath: null
+  mapId: null
+  # Same source as aos-backend: yeefungagv.plc.name-prefixes (see YeefungAgvPlcPrefixProperties / application-dev.yml)
+  applyStripping: true
+  pointPrefix: "Point_"
+  pathPrefix: "Path_"
+  layoutScaleMm: 50
+  layoutFlipY: true
+
+simulation:
+  # Initial pose: OpenTCS point name from the loaded plant XML (e.g. Point_1). Requires map.xmlPath.
+  initialPointName: "Point_1"
+  # Physics step (ms). state is NOT periodic — only on new Point (lastNodeId / sequence change).
+  stateIntervalMs: 100
+  # visualization interval (ms)
+  visualizationMinIntervalMs: 100
+  # Default speed when edge has no maxSpeed (m/s)
+  defaultSpeedMps: 0.5
+  # Arrival radius (m)
+  arrivalEpsilonM: 0.05
+  # Protocol version string on outgoing messages
+  protocolVersion: "2.1.0"
+  operatingMode: "AUTOMATIC"

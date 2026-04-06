@@ -1,0 +1,16 @@
+# Reference: MQTT topic suffixes vs YFAOS CommAdapterImpl.enable()
+# topicPrefix = {interfaceName}/v{major}/{manufacturer}/{serialNumber}
+#
+# Direction "AOS->Sim" means AOS adapter publishes, simulator subscribes.
+# Direction "Sim->AOS" means simulator publishes, AOS adapter subscribes.
+#
+# | suffix            | Direction   | Adapter QoS (subscribe) | Simulator QoS (publish) |
+# |-------------------|------------|-------------------------|---------------------------|
+# | /order            | AOS->Sim   | — (publisher uses 1)    | subscribe: 1              |
+# | /instantActions   | AOS->Sim   | —                       | subscribe: 1              |
+# | /connection       | Sim->AOS   | AT_LEAST_ONCE (1)       | publish: 1                |
+# | /state            | Sim->AOS   | AT_MOST_ONCE (0)        | publish: 0                |
+# | /visualization    | Sim->AOS   | AT_MOST_ONCE (0)        | publish: 0                |
+# | /factsheet        | Sim->AOS   | AT_LEAST_ONCE (1)       | optional (not in MVP)     |
+#
+# Runtime values are in application.yaml under mqtt.publish / mqtt.subscribe.
