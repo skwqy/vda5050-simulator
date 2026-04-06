@@ -3,6 +3,8 @@ package com.yeefung.vda5050.simulator.mqtt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yeefung.vda5050.simulator.config.SimulatorProperties;
 import com.yeefung.vda5050.simulator.core.SimulationEngine;
+import com.yeefung.vda5050.simulator.core.vda.VdaHeaderIds;
+import com.yeefung.vda5050.simulator.core.vda.VdaMessageBuilder;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -27,6 +29,7 @@ public final class MqttVdaBridge implements AutoCloseable {
   private final ObjectMapper json;
   private final HeaderClock clock;
   private final Executor executor;
+  private final VdaMessageBuilder vdaMessageBuilder;
 
   private MqttClient client;
 
@@ -35,13 +38,15 @@ public final class MqttVdaBridge implements AutoCloseable {
       SimulationEngine engine,
       ObjectMapper json,
       HeaderClock clock,
-      Executor executor
+      Executor executor,
+      VdaMessageBuilder vdaMessageBuilder
   ) {
     this.props = Objects.requireNonNull(props, "props");
     this.engine = Objects.requireNonNull(engine, "engine");
     this.json = Objects.requireNonNull(json, "json");
     this.clock = Objects.requireNonNull(clock, "clock");
     this.executor = Objects.requireNonNull(executor, "executor");
+    this.vdaMessageBuilder = Objects.requireNonNull(vdaMessageBuilder, "vdaMessageBuilder");
   }
 
   public void start() throws Exception {
@@ -98,13 +103,7 @@ public final class MqttVdaBridge implements AutoCloseable {
 
   public void publishConnectionOnline() throws Exception {
     String prefix = props.topicPrefix();
-    var root = json.createObjectNode();
-    root.put("headerId", clock.nextConnection());
-    root.put("timestamp", java.time.Instant.now().toString());
-    root.put("version", props.simulation.protocolVersion);
-    root.put("manufacturer", props.mqtt.manufacturer);
-    root.put("serialNumber", props.mqtt.serialNumber);
-    root.put("connectionState", "ONLINE");
+    var root = vdaMessageBuilder.buildConnection(props, new VdaHeaderIds(clock.nextConnection()));
     byte[] bytes = json.writeValueAsBytes(root);
     String topic = prefix + "/connection";
     logOutbound("connection", topic, bytes);
@@ -117,7 +116,7 @@ public final class MqttVdaBridge implements AutoCloseable {
     }
     try {
       long hid = clock.nextState();
-      var node = engine.buildState(new SimulationEngine.HeaderIds(hid));
+      var node = engine.buildState(new VdaHeaderIds(hid));
       byte[] bytes = json.writeValueAsBytes(node);
       String topic = props.topicPrefix() + "/state";
       logOutbound("state", topic, bytes);
@@ -141,7 +140,7 @@ public final class MqttVdaBridge implements AutoCloseable {
     }
     try {
       long hid = clock.nextVisualization();
-      var node = engine.buildVisualization(new SimulationEngine.HeaderIds(hid));
+      var node = engine.buildVisualization(new VdaHeaderIds(hid));
       byte[] bytes = json.writeValueAsBytes(node);
       String topic = props.topicPrefix() + "/visualization";
       logOutbound("visualization", topic, bytes);

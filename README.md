@@ -19,13 +19,37 @@ mvn -q package
 mvn -q exec:java
 ```
 
+开发调试时建议先 **clean 再编译再启动**，避免增量编译未重编改动类、或旧进程仍在跑旧代码：
+
+```bash
+mvn -q clean compile exec:java
+```
+
 Override config:
 
 ```bash
 mvn -q exec:java -Dsimulator.config=D:/path/to/my-sim.yaml
 ```
 
+使用外部配置时同样可先整编：
+
+```bash
+mvn -q clean compile exec:java -Dsimulator.config=D:/path/to/my-sim.yaml
+```
+
 Ensure `topicPrefix` matches the vehicle in Operations Desk / DB (`interfaceName`, `majorVersion`, `manufacturer`, `serialNumber`). Default config uses `serialNumber: "Vehicle_2"` — change both sides if you use another vehicle name.
+
+## Order 边执行模式（`simulation.orderExecutionMode`）
+
+- **`IGNORE_RELEASED`**（默认）：按 `sequenceId` 使用订单中的**全部**边，不读 `released`（游乐/全路径联调）。多段路径（如 1→2→3）时**不在中间节点**（到达 2）发 MQTT `state`，仅在**最终终点**发与**路径节点相关**的 `state`。**例外**：AOS 下发的**需应答的及时报文**（典型为 `instantActions`）仍按原逻辑发带 `actionStates` 的 `state`；该分支在策略里优先于「中间点不发」，首帧、续单抑制、`requestImmediateStatePublish` 等同理。
+- **`STRICT_PREFIX_RELEASED`**：只执行从首边开始的**连续** `released=true` 前缀；在第一条未释放边前停车，`driving=false`，等待 AOS 再发 order/orderUpdate。
+- **`releasedFieldMissingAsReleased`**：仅在 STRICT 下生效；边上没有 `released` 字段时视为 `true` 或 `false`（默认 `true`，与旧 JSON 兼容）。
+
+配置见 [`application.yaml`](src/main/resources/application.yaml) 中 `simulation` 段；设计说明见 [docs/订单边执行模式设计.md](docs/订单边执行模式设计.md)。
+
+**续单与重复 state：** 当 **MQTT 又来一条新 `order`（`orderId` 与上一帧已发 `state` 里不同）**、车仍停在**同一逻辑节点**、且当前位姿与上一帧已发 state 的平面距离在 **`simulation.continuationStandstillEpsilonM`**（默认 **0.2 m**）内时，模拟器只置位 **`suppressOneStatePublishAfterStandstillContinuation`**，在**下一次** `shouldPublishState()` 时**跳过 1 帧** `state`（避免 AOS 判「同点同位置重复上报」）。**不是**用「2 m 内都不报」这类粗距离规则；首单（上一帧尚未带非空 `orderId`）不会触发该逻辑。若植物与订单坐标差略大，可适当**增大** `continuationStandstillEpsilonM`，一般不必动 `arrivalEpsilonM`。
+
+**`orderId` 与主站校验：** `state` 中的 `orderId` 会随**最后一次收到的** MQTT `order` 更新。若 AOS 报「`orderId` 无效」，多为适配器侧 `validateOrderId` 与 `TransportOrder` 关联问题，见上文说明。
 
 ## 地图目录与更换地图
 
@@ -134,11 +158,13 @@ OpenTCS 中常见为 **两个布局控制点**，对应三次贝塞尔：
 
 - On connect, publishes `connection` with `connectionState: ONLINE`.
 - Keeps `operatingMode` as `AUTOMATIC` (configurable).
-- For each received `order`, motion follows the **Motion logic** section above; `lastNodeId` updates as described for `MessageResponseMatcher.orderAccepted` alignment.
+- For each received `order`, motion follows the **Motion logic** section above and `simulation.orderExecutionMode` (`IGNORE_RELEASED` vs `STRICT_PREFIX_RELEASED`); `lastNodeId` updates as described for `MessageResponseMatcher.orderAccepted` alignment.
 - For `instantActions`, reports each action as `FINISHED` in the next `state` messages (`actionId` must match).
 - `cancelOrder` clears the current order simulation and emits a finished action state.
 
 ## See also
 
-- [src/main/resources/application.yaml](src/main/resources/application.yaml) — defaults, MQTT QoS, and `map.*` keys
+- [src/main/resources/application.yaml](src/main/resources/application.yaml) — defaults, MQTT QoS, `simulation.orderExecutionMode`, and `map.*` keys
+- [docs/订单边执行模式设计.md](docs/订单边执行模式设计.md) — `released` / horizon 行为说明
 - [src/main/resources/simulator-mqtt-matrix.yaml](src/main/resources/simulator-mqtt-matrix.yaml) — topic/QoS reference table
+- 代码结构：`Vda5050SimulatorApp` 创建共享的 [`VdaMessageBuilder`](src/main/java/com/yeefung/vda5050/simulator/core/vda/VdaMessageBuilder.java) 与 [`PlantBinding`](src/main/java/com/yeefung/vda5050/simulator/core/PlantBinding.java) / [`OrderRoutePlanner`](src/main/java/com/yeefung/vda5050/simulator/core/order/OrderRoutePlanner.java)，注入 [`SimulationEngine`](src/main/java/com/yeefung/vda5050/simulator/core/SimulationEngine.java) 与 [`MqttVdaBridge`](src/main/java/com/yeefung/vda5050/simulator/mqtt/MqttVdaBridge.java)。`SimulationEngine` 委托 [`StatePublishPolicy`](src/main/java/com/yeefung/vda5050/simulator/core/state/StatePublishPolicy.java) 决定发 `state` 时机；[`ReleasedEdgeSelector`](src/main/java/com/yeefung/vda5050/simulator/core/order/ReleasedEdgeSelector.java) 解析可执行边；[`RouteFollower`](src/main/java/com/yeefung/vda5050/simulator/core/route/RouteFollower.java) 沿 `MotionSegment` 推进；[`JsonNodes`](src/main/java/com/yeefung/vda5050/simulator/util/JsonNodes.java) 读取订单 JSON 字段；MQTT 头 ID 使用 [`VdaHeaderIds`](src/main/java/com/yeefung/vda5050/simulator/core/vda/VdaHeaderIds.java)。

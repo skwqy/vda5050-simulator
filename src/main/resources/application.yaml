@@ -43,6 +43,10 @@ map:
   layoutFlipY: true
 
 simulation:
+  # IGNORE_RELEASED — full edges by sequenceId; no state MQTT at intermediate path nodes (only at final node + existing rules). STRICT_PREFIX — released prefix only.
+  orderExecutionMode: IGNORE_RELEASED
+  # Only for STRICT_PREFIX_RELEASED: missing "released" on an edge counts as true or false
+  releasedFieldMissingAsReleased: true
   # Initial pose: OpenTCS point name from the loaded plant XML (e.g. Point_1). Requires map.xmlPath.
   initialPointName: "Point_1"
   # Physics step (ms). state is NOT periodic — only on new Point (lastNodeId / sequence change).
@@ -53,6 +57,8 @@ simulation:
   defaultSpeedMps: 0.5
   # Arrival radius (m)
   arrivalEpsilonM: 0.05
+  # New MQTT order (new orderId) at same standstill: max XY drift vs last published state to skip one redundant state
+  continuationStandstillEpsilonM: 0.2
   # Protocol version string on outgoing messages
   protocolVersion: "2.1.0"
   operatingMode: "AUTOMATIC"

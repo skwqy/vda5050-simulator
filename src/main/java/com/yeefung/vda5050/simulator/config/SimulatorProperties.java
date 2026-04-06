@@ -60,6 +60,21 @@ public class SimulatorProperties {
      * sets {@code agvPosition} and {@code lastNodeId} before any order. Empty = (0,0) and empty lastNodeId.
      */
     public String initialPointName = "";
+    /**
+     * How to interpret {@code released} on each order edge — default matches legacy “run full path” demos.
+     */
+    public OrderExecutionMode orderExecutionMode = OrderExecutionMode.IGNORE_RELEASED;
+    /**
+     * Only for {@link OrderExecutionMode#STRICT_PREFIX_RELEASED}: when {@code released} is absent on an edge,
+     * treat as released ({@code true}) or horizon ({@code false}).
+     */
+    public boolean releasedFieldMissingAsReleased = true;
+    /**
+     * When a <b>new</b> MQTT {@code order} arrives (new {@code orderId}) but the vehicle is still at the
+     * same logical node and pose within this distance of the last published state, skip <b>one</b> redundant
+     * {@code state} publish — AOS often sends continuation orders that only renumber nodes/sequenceId.
+     */
+    public double continuationStandstillEpsilonM = 0.2;
   }
 
   /**

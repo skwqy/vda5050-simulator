@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.yeefung.vda5050.simulator.config.SimulatorProperties;
+import com.yeefung.vda5050.simulator.core.PlantBinding;
 import com.yeefung.vda5050.simulator.core.SimulationEngine;
+import com.yeefung.vda5050.simulator.core.order.OrderRoutePlanner;
+import com.yeefung.vda5050.simulator.core.vda.VdaMessageBuilder;
 import com.yeefung.vda5050.simulator.map.OpenTcsPlantXmlLoader;
 import com.yeefung.vda5050.simulator.map.PlantModel;
 import com.yeefung.vda5050.simulator.mqtt.HeaderClock;
@@ -34,7 +37,16 @@ public final class Vda5050SimulatorApp {
     json.registerModule(new JavaTimeModule());
 
     PlantModel plantModel = loadPlantModel(props);
-    var engine = new SimulationEngine(props, plantModel);
+    PlantBinding plantBinding = PlantBinding.from(props, plantModel);
+    VdaMessageBuilder vdaMessageBuilder = new VdaMessageBuilder();
+    OrderRoutePlanner orderRoutePlanner =
+        new OrderRoutePlanner(
+            plantModel,
+            plantBinding.layoutTransform(),
+            plantBinding.nameResolver(),
+            plantBinding.mapNameCodec());
+    var engine =
+        new SimulationEngine(props, plantModel, vdaMessageBuilder, orderRoutePlanner, plantBinding);
     var clock = new HeaderClock();
     var mqttExecutor = Executors.newSingleThreadExecutor(r -> {
       Thread t = new Thread(r, "mqtt-order");
@@ -42,7 +54,7 @@ public final class Vda5050SimulatorApp {
       return t;
     });
 
-    var bridge = new MqttVdaBridge(props, engine, json, clock, mqttExecutor);
+    var bridge = new MqttVdaBridge(props, engine, json, clock, mqttExecutor, vdaMessageBuilder);
     bridge.start();
 
     ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {

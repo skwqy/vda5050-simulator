@@ -4,23 +4,23 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.yeefung.vda5050.simulator.config.OrderExecutionMode;
 import com.yeefung.vda5050.simulator.config.SimulatorProperties;
-import com.yeefung.vda5050.simulator.map.LayoutTransform;
-import com.yeefung.vda5050.simulator.map.MotionSegment;
-import com.yeefung.vda5050.simulator.map.PathMotionFactory;
+import com.yeefung.vda5050.simulator.core.order.IgnoreReleasedActiveEdgeTrimmer;
+import com.yeefung.vda5050.simulator.core.order.OrderRoutePlanner;
+import com.yeefung.vda5050.simulator.core.order.ReleasedEdgeSelector;
+import com.yeefung.vda5050.simulator.core.route.RouteFollower;
+import com.yeefung.vda5050.simulator.core.state.StatePublishPolicy;
+import com.yeefung.vda5050.simulator.core.vda.VdaHeaderIds;
+import com.yeefung.vda5050.simulator.core.vda.VdaMessageBuilder;
 import com.yeefung.vda5050.simulator.map.PlantModel;
-import com.yeefung.vda5050.simulator.map.PlantPath;
 import com.yeefung.vda5050.simulator.map.PointMm;
-import com.yeefung.vda5050.simulator.map.PolylineMotion;
-import com.yeefung.vda5050.simulator.map.ReversedMotionSegment;
 import com.yeefung.vda5050.simulator.map.Vda5050MapNameCodec;
+import com.yeefung.vda5050.simulator.util.JsonNodes;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
@@ -29,6 +29,12 @@ import java.util.Queue;
  * Movement compatible with YFAOS {@code MessageResponseMatcher#orderAccepted}: {@code lastNodeId}
  * must reach the segment destination. When a plant XML is loaded, motion follows POLYPATH / BEZIER
  * geometry like {@code AgvCommunicationAdapter}.
+ *
+ * <p>State publication cadence is delegated to {@link com.yeefung.vda5050.simulator.core.state.StatePublishPolicy};
+ * VDA JSON payloads are built by the injected {@link com.yeefung.vda5050.simulator.core.vda.VdaMessageBuilder}.
+ * Order edge selection and route geometry use {@link com.yeefung.vda5050.simulator.core.order.ReleasedEdgeSelector}
+ * and the injected {@link com.yeefung.vda5050.simulator.core.order.OrderRoutePlanner} (sharing {@link PlantBinding}
+ * wiring with the planner).
  */
 public final class SimulationEngine {
 
@@ -36,10 +42,13 @@ public final class SimulationEngine {
 
   private final SimulatorProperties props;
   private final PlantModel plantModel;
-  private final LayoutTransform layoutTransform;
   private final PlantModel.NameResolver nameResolver;
   private final Vda5050MapNameCodec mapNameCodec;
   private final JsonNodeFactory json = JsonNodeFactory.instance;
+  private final StatePublishPolicy statePublishPolicy = new StatePublishPolicy();
+  private final VdaMessageBuilder vdaMessageBuilder;
+  private final ReleasedEdgeSelector releasedEdgeSelector;
+  private final OrderRoutePlanner orderRoutePlanner;
 
   private double x;
   private double y;
@@ -58,24 +67,21 @@ public final class SimulationEngine {
   private final Queue<InstantActionPending> instantQueue = new ArrayDeque<>();
   private final List<ObjectNode> lastActionStates = new ArrayList<>();
 
-  private boolean statePublishedOnce;
-  private String lastPublishedOpenTcsNodeId = "";
-  private long lastPublishedNodeSequenceId;
-
-  public SimulationEngine(SimulatorProperties props) {
-    this(props, null);
-  }
-
-  public SimulationEngine(SimulatorProperties props, PlantModel plantModel) {
+  public SimulationEngine(
+      SimulatorProperties props,
+      PlantModel plantModel,
+      VdaMessageBuilder vdaMessageBuilder,
+      OrderRoutePlanner orderRoutePlanner,
+      PlantBinding plantBinding
+  ) {
     this.props = Objects.requireNonNull(props, "props");
     this.plantModel = plantModel;
-    this.layoutTransform = plantModel != null ? new LayoutTransform(props.map) : null;
-    this.mapNameCodec =
-        new Vda5050MapNameCodec(
-            props.map.applyStripping, props.map.pointPrefix, props.map.pathPrefix);
-    this.nameResolver =
-        new PlantModel.NameResolver(
-            props.map.applyStripping, props.map.pointPrefix, props.map.pathPrefix);
+    Objects.requireNonNull(plantBinding, "plantBinding");
+    this.mapNameCodec = plantBinding.mapNameCodec();
+    this.nameResolver = plantBinding.nameResolver();
+    this.vdaMessageBuilder = Objects.requireNonNull(vdaMessageBuilder, "vdaMessageBuilder");
+    this.orderRoutePlanner = Objects.requireNonNull(orderRoutePlanner, "orderRoutePlanner");
+    this.releasedEdgeSelector = new ReleasedEdgeSelector(props);
     if (props.map.mapId != null && !props.map.mapId.isBlank()) {
       this.mapId = props.map.mapId.trim();
     } else if (plantModel != null) {
@@ -149,55 +155,128 @@ public final class SimulationEngine {
 
   /**
    * Whether to emit a {@code state} message: on first publish, or when the vehicle reaches a new
-   * point ({@code lastNodeId} / {@code lastNodeSequenceId} change). Instant-action completions are
-   * included in the next such state (no periodic state).
+   * point ({@code lastNodeId} / {@code lastNodeSequenceId} change), except in
+   * {@link OrderExecutionMode#IGNORE_RELEASED} at intermediate waypoints (multi-edge routes).
+   * Pending {@code instantActions} / {@code actionStates} and other high-priority branches in
+   * {@link StatePublishPolicy} still publish first. Delegates to {@link StatePublishPolicy}.
    */
   public synchronized boolean shouldPublishState() {
     flushInstantToActionStates();
-    if (!statePublishedOnce) {
-      return true;
-    }
-    return !Objects.equals(lastNodeId, lastPublishedOpenTcsNodeId)
-        || lastNodeSequenceId != lastPublishedNodeSequenceId;
+    boolean ignoreReleasedIntermediate =
+        props.simulation.orderExecutionMode == OrderExecutionMode.IGNORE_RELEASED
+            && route != null
+            && route.isAtIntermediateWaypoint();
+    return statePublishPolicy.shouldPublish(
+        !lastActionStates.isEmpty(),
+        mapNameCodec,
+        lastNodeId,
+        lastNodeSequenceId,
+        x,
+        y,
+        orderId,
+        ignoreReleasedIntermediate);
   }
 
   /** Call after a {@code state} payload was successfully sent. */
   public synchronized void afterStatePublished() {
-    statePublishedOnce = true;
-    lastPublishedOpenTcsNodeId = lastNodeId;
-    lastPublishedNodeSequenceId = lastNodeSequenceId;
+    statePublishPolicy.recordSuccessfulPublish(lastNodeId, lastNodeSequenceId, x, y, orderId);
   }
 
   public synchronized void onOrderMessage(JsonNode root) {
-    String oid = text(root, "orderId");
-    Long ouid = longVal(root, "orderUpdateId");
-    JsonNode nodes = root.get("nodes");
-    if (nodes == null || !nodes.isArray() || nodes.isEmpty()) {
+    String oid = JsonNodes.text(root, "orderId");
+    long ouid = JsonNodes.longVal(root, "orderUpdateId");
+    List<JsonNode> sortedNodes = ReleasedEdgeSelector.sortedOrderNodes(root);
+    if (sortedNodes.isEmpty()) {
       return;
     }
-    List<JsonNode> sortedNodes = new ArrayList<>();
-    nodes.forEach(sortedNodes::add);
-    sortedNodes.sort(Comparator.comparingLong(n -> longVal(n, "sequenceId")));
 
     orderId = oid != null ? oid : "";
-    orderUpdateId = ouid != null ? ouid : 0L;
+    orderUpdateId = ouid;
 
-    List<JsonNode> releasedEdges = collectReleasedEdges(root);
-    if (releasedEdges.isEmpty()) {
-      System.getLogger(SimulationEngine.class.getName()).log(
+    List<JsonNode> sortedEdges = releasedEdgeSelector.sortEdgesBySequenceId(root);
+    if (sortedEdges.isEmpty()) {
+      LOG.log(
           System.Logger.Level.WARNING,
-          "order has no released edges — skip motion (horizon-only order)");
+          "order has no edges — skip motion"
+      );
       route = null;
       driving = false;
       return;
     }
 
-    double speed = maxEdgeSpeedMps(releasedEdges, props.simulation.defaultSpeedMps);
+    List<JsonNode> activeEdges = new ArrayList<>(releasedEdgeSelector.selectEdgesForExecution(sortedEdges));
+
+    if (props.simulation.orderExecutionMode == OrderExecutionMode.IGNORE_RELEASED
+        && route != null
+        && driving
+        && !activeEdges.isEmpty()) {
+      int skip =
+          IgnoreReleasedActiveEdgeTrimmer.computeLeadingSkipCount(
+              activeEdges, sortedNodes, route, orderRoutePlanner, mapNameCodec);
+      if (skip >= activeEdges.size()) {
+        orderId = oid != null ? oid : "";
+        orderUpdateId = ouid;
+        LOG.log(
+            System.Logger.Level.INFO,
+            "IGNORE_RELEASED: new order edges already covered — keep current route");
+        return;
+      }
+      if (skip > 0) {
+        activeEdges = new ArrayList<>(activeEdges.subList(skip, activeEdges.size()));
+        LOG.log(
+            System.Logger.Level.INFO,
+            "IGNORE_RELEASED: skipping " + skip + " leading edge(s) already passed");
+      }
+    }
+
+    if (activeEdges.isEmpty()) {
+      if (props.simulation.orderExecutionMode == OrderExecutionMode.STRICT_PREFIX_RELEASED) {
+        JsonNode first = sortedEdges.getFirst();
+        long brk = JsonNodes.longVal(first, "sequenceId");
+        LOG.log(
+            System.Logger.Level.WARNING,
+            "STRICT_PREFIX_RELEASED: empty released prefix orderId="
+                + orderId
+                + " orderUpdateId="
+                + orderUpdateId
+                + " breakpointSequenceId="
+                + brk
+                + " lastNodeId="
+                + lastNodeId
+        );
+        statePublishPolicy.setImmediateStatePublishRequested(true);
+      } else {
+        LOG.log(System.Logger.Level.WARNING, "order has no executable edges — skip motion");
+      }
+      route = null;
+      driving = false;
+      return;
+    }
+
+    if (props.simulation.orderExecutionMode == OrderExecutionMode.STRICT_PREFIX_RELEASED
+        && sortedEdges.size() > activeEdges.size()) {
+      JsonNode nextAfterPrefix = sortedEdges.get(activeEdges.size());
+      LOG.log(
+          System.Logger.Level.INFO,
+          "STRICT_PREFIX_RELEASED: horizon boundary orderId="
+              + orderId
+              + " prefixEdges="
+              + activeEdges.size()
+              + " totalEdges="
+              + sortedEdges.size()
+              + " nextUnreleasedSequenceId="
+              + JsonNodes.longVal(nextAfterPrefix, "sequenceId")
+      );
+    }
+
+    double speed = OrderRoutePlanner.maxEdgeSpeedMps(activeEdges, props.simulation.defaultSpeedMps);
 
     JsonNode firstReleasedStartNode =
-        findNodeById(sortedNodes, text(releasedEdges.getFirst(), "startNodeId"));
+        orderRoutePlanner.findOrderNode(
+            sortedNodes, JsonNodes.text(activeEdges.getFirst(), "startNodeId"));
     JsonNode lastReleasedEndNode =
-        findNodeById(sortedNodes, text(releasedEdges.getLast(), "endNodeId"));
+        orderRoutePlanner.findOrderNode(
+            sortedNodes, JsonNodes.text(activeEdges.getLast(), "endNodeId"));
     if (firstReleasedStartNode == null || lastReleasedEndNode == null) {
       System.getLogger(SimulationEngine.class.getName()).log(
           System.Logger.Level.WARNING,
@@ -208,18 +287,8 @@ public final class SimulationEngine {
     }
 
     Optional<RouteFollower> built =
-        plantModel != null ? buildRouteFromPlant(releasedEdges, sortedNodes, speed) : Optional.empty();
-    if (built.isEmpty()) {
-      built = buildRouteFromReleasedNodePositions(releasedEdges, sortedNodes, speed);
-    }
-    if (built.isEmpty()) {
-      built =
-          buildRouteSingleStraightReleased(
-              releasedEdges,
-              firstReleasedStartNode,
-              lastReleasedEndNode,
-              speed);
-    }
+        orderRoutePlanner.buildRoute(
+            activeEdges, sortedNodes, firstReleasedStartNode, lastReleasedEndNode, speed);
     if (built.isEmpty()) {
       route = null;
       driving = false;
@@ -227,294 +296,30 @@ public final class SimulationEngine {
     }
 
     route = built.get();
+    double wx = x;
+    double wy = y;
     route.start();
+    if (props.simulation.orderExecutionMode == OrderExecutionMode.IGNORE_RELEASED && driving) {
+      route.snapProgressToWorld(wx, wy);
+    }
     x = route.x;
     y = route.y;
     theta = route.theta;
     lastNodeId = route.lastNodeId;
-    lastNodeSequenceId = longVal(firstReleasedStartNode, "sequenceId");
+    // Must match RouteFollower (segFromSeq); do not use nodes[] alone — it can disagree and then
+    // the next tick() sync would flip lastNodeSequenceId and trigger a duplicate state at the same pose.
+    lastNodeSequenceId = route.lastNodeSequenceId;
     driving = true;
+
+    statePublishPolicy.evaluateStandstillContinuationAfterOrder(
+        orderId,
+        lastNodeId,
+        x,
+        y,
+        mapNameCodec,
+        props.simulation.continuationStandstillEpsilonM);
   }
 
-  private static List<JsonNode> collectReleasedEdges(JsonNode orderRoot) {
-    JsonNode edgesNode = orderRoot.get("edges");
-    if (edgesNode == null || !edgesNode.isArray()) {
-      return List.of();
-    }
-    List<JsonNode> out = new ArrayList<>();
-    for (JsonNode e : edgesNode) {
-      if (edgeReleased(e)) {
-        out.add(e);
-      }
-    }
-    out.sort(Comparator.comparingLong(e -> longVal(e, "sequenceId")));
-    return out;
-  }
-
-  /** VDA: {@code false} = horizon (not driven). {@code null} treated as released for lenient parsing. */
-  private static boolean edgeReleased(JsonNode edge) {
-    JsonNode r = edge.get("released");
-    if (r == null || r.isNull()) {
-      return true;
-    }
-    return r.asBoolean();
-  }
-
-  private static JsonNode findNodeById(List<JsonNode> sortedNodes, String nodeId) {
-    if (nodeId == null || nodeId.isBlank()) {
-      return null;
-    }
-    String want = nodeId.trim();
-    for (JsonNode n : sortedNodes) {
-      String id = text(n, "nodeId");
-      if (id != null && id.trim().equals(want)) {
-        return n;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * For each released edge: use plant POLYPATH/BEZIER when resolvable; otherwise a straight chord
-   * between {@code nodePosition}s from the order. Avoids dropping the whole route (and falling back
-   * to all-chord or one diagonal) when a single edge fails to match the plant.
-   */
-  private Optional<RouteFollower> buildRouteFromPlant(
-      List<JsonNode> releasedEdges,
-      List<JsonNode> sortedNodes,
-      double defaultSpeed
-  ) {
-    Map<String, JsonNode> byId = indexNodesById(sortedNodes);
-    List<MotionSegment> segments = new ArrayList<>();
-    List<String> segFrom = new ArrayList<>();
-    List<String> segTo = new ArrayList<>();
-    List<Double> speeds = new ArrayList<>();
-
-    for (JsonNode edge : releasedEdges) {
-      String eid = text(edge, "edgeId");
-      String s0 = text(edge, "startNodeId");
-      String s1 = text(edge, "endNodeId");
-      if (s0 == null || s1 == null) {
-        return Optional.empty();
-      }
-      double sp = doubleOr(edge, "maxSpeed", defaultSpeed);
-      Optional<PlantPath> pp = plantModel.resolvePath(eid, s0, s1, nameResolver);
-      boolean reverseAlongPlant = false;
-      if (pp.isEmpty()) {
-        pp = plantModel.resolvePath("", s1, s0, nameResolver);
-        reverseAlongPlant = pp.isPresent();
-        if (reverseAlongPlant) {
-          LOG.log(
-              System.Logger.Level.INFO,
-              "Using reverse plant path for order edge "
-                  + s0
-                  + " -> "
-                  + s1
-                  + " (map defines "
-                  + s1
-                  + " -> "
-                  + s0
-                  + ")"
-          );
-        }
-      }
-      boolean usedPlant = false;
-      if (pp.isPresent()) {
-        try {
-          PlantPath path = pp.get();
-          MotionSegment motion = PathMotionFactory.build(path, plantModel, layoutTransform);
-          if (reverseAlongPlant) {
-            motion = new ReversedMotionSegment(motion);
-          }
-          segments.add(motion);
-          segFrom.add(mapNameCodec.toOpenTcsPointName(s0.trim()));
-          segTo.add(mapNameCodec.toOpenTcsPointName(s1.trim()));
-          speeds.add(sp > 0 ? sp : defaultSpeed);
-          usedPlant = true;
-        } catch (RuntimeException ex) {
-          LOG.log(
-              System.Logger.Level.WARNING,
-              "Plant geometry failed for edgeId=" + eid + ", using chord from order nodes",
-              ex
-          );
-        }
-      }
-      if (!usedPlant) {
-        if (pp.isEmpty()) {
-          LOG.log(
-              System.Logger.Level.WARNING,
-              "No plant path for edgeId="
-                  + eid
-                  + " ("
-                  + s0
-                  + " -> "
-                  + s1
-                  + "); using straight chord from order nodePosition"
-          );
-        }
-        JsonNode n0 = byId.get(s0.trim());
-        JsonNode n1 = byId.get(s1.trim());
-        if (n0 == null || n1 == null) {
-          LOG.log(
-              System.Logger.Level.WARNING,
-              "Missing node in order for chord fallback: " + s0 + " / " + s1
-          );
-          return Optional.empty();
-        }
-        double[] a = nodePositionMeters(n0);
-        double[] b = nodePositionMeters(n1);
-        PointMm p0 = new PointMm(Math.round(a[0] * 1000.0), Math.round(a[1] * 1000.0));
-        PointMm p1 = new PointMm(Math.round(b[0] * 1000.0), Math.round(b[1] * 1000.0));
-        try {
-          segments.add(new PolylineMotion(java.util.List.of(p0, p1)));
-        } catch (RuntimeException ex) {
-          return Optional.empty();
-        }
-        segFrom.add(mapNameCodec.toOpenTcsPointName(s0.trim()));
-        segTo.add(mapNameCodec.toOpenTcsPointName(s1.trim()));
-        speeds.add(sp > 0 ? sp : defaultSpeed);
-      }
-    }
-
-    JsonNode firstEdge = releasedEdges.getFirst();
-    JsonNode lastEdge = releasedEdges.getLast();
-    long firstSeq = sequenceIdForNodeId(sortedNodes, text(firstEdge, "startNodeId"));
-    long lastSeq = sequenceIdForNodeId(sortedNodes, text(lastEdge, "endNodeId"));
-    return Optional.of(
-        new RouteFollower(
-            segments,
-            segFrom,
-            segTo,
-            speeds,
-            firstSeq,
-            lastSeq
-        )
-    );
-  }
-
-  private static Map<String, JsonNode> indexNodesById(List<JsonNode> sortedNodes) {
-    Map<String, JsonNode> byId = new HashMap<>();
-    for (JsonNode n : sortedNodes) {
-      String id = text(n, "nodeId");
-      if (id != null && !id.isBlank()) {
-        byId.putIfAbsent(id.trim(), n);
-      }
-    }
-    return byId;
-  }
-
-  /**
-   * Straight segments along each released edge using {@code nodePosition} from the order (metres).
-   * Internal node ids are vehicle-side strings from the order.
-   */
-  private Optional<RouteFollower> buildRouteFromReleasedNodePositions(
-      List<JsonNode> releasedEdges,
-      List<JsonNode> sortedNodes,
-      double defaultSpeed
-  ) {
-    Map<String, JsonNode> byId = indexNodesById(sortedNodes);
-    List<MotionSegment> segments = new ArrayList<>();
-    List<String> segFrom = new ArrayList<>();
-    List<String> segTo = new ArrayList<>();
-    List<Double> speeds = new ArrayList<>();
-
-    for (JsonNode edge : releasedEdges) {
-      String s0 = text(edge, "startNodeId");
-      String s1 = text(edge, "endNodeId");
-      if (s0 == null || s1 == null) {
-        return Optional.empty();
-      }
-      JsonNode n0 = byId.get(s0.trim());
-      JsonNode n1 = byId.get(s1.trim());
-      if (n0 == null || n1 == null) {
-        return Optional.empty();
-      }
-      double[] a = nodePositionMeters(n0);
-      double[] b = nodePositionMeters(n1);
-      PointMm p0 = new PointMm(Math.round(a[0] * 1000.0), Math.round(a[1] * 1000.0));
-      PointMm p1 = new PointMm(Math.round(b[0] * 1000.0), Math.round(b[1] * 1000.0));
-      try {
-        segments.add(new PolylineMotion(java.util.List.of(p0, p1)));
-      } catch (RuntimeException ex) {
-        return Optional.empty();
-      }
-      segFrom.add(s0.trim());
-      segTo.add(s1.trim());
-      speeds.add(doubleOr(edge, "maxSpeed", defaultSpeed));
-    }
-
-    JsonNode fe = releasedEdges.getFirst();
-    JsonNode le = releasedEdges.getLast();
-    long firstSeq = sequenceIdForNodeId(sortedNodes, text(fe, "startNodeId"));
-    long lastSeq = sequenceIdForNodeId(sortedNodes, text(le, "endNodeId"));
-    return Optional.of(
-        new RouteFollower(segments, segFrom, segTo, speeds, firstSeq, lastSeq)
-    );
-  }
-
-  /** One straight leg from first released start to last released end (weakest fallback). */
-  private Optional<RouteFollower> buildRouteSingleStraightReleased(
-      List<JsonNode> releasedEdges,
-      JsonNode firstNode,
-      JsonNode lastNode,
-      double defaultSpeed
-  ) {
-    String fromId = text(firstNode, "nodeId");
-    String toId = text(lastNode, "nodeId");
-    if (fromId == null || toId == null) {
-      return Optional.empty();
-    }
-    double[] start = nodePositionMeters(firstNode);
-    double[] end = nodePositionMeters(lastNode);
-    double sp = doubleOr(releasedEdges.getFirst(), "maxSpeed", defaultSpeed);
-    return Optional.of(
-        RouteFollower.singleStraightLeg(
-            fromId.trim(),
-            toId.trim(),
-            longVal(firstNode, "sequenceId"),
-            longVal(lastNode, "sequenceId"),
-            start[0],
-            start[1],
-            end[0],
-            end[1],
-            sp > 0 ? sp : defaultSpeed
-        )
-    );
-  }
-
-  private static long sequenceIdForNodeId(List<JsonNode> sortedNodes, String nodeId) {
-    JsonNode n = findNodeById(sortedNodes, nodeId);
-    return n != null ? longVal(n, "sequenceId") : 0L;
-  }
-
-  private static double[] nodePositionMeters(JsonNode node) {
-    JsonNode np = node.get("nodePosition");
-    if (np != null && np.isObject()) {
-      Double px = doubleVal(np, "x");
-      Double py = doubleVal(np, "y");
-      if (px != null && py != null) {
-        return new double[] {px, py};
-      }
-    }
-    return new double[] {0.0, 0.0};
-  }
-
-  private static double maxEdgeSpeedMps(List<JsonNode> releasedEdges, double def) {
-    double m = def;
-    for (JsonNode e : releasedEdges) {
-      Double ms = doubleVal(e, "maxSpeed");
-      if (ms != null && ms > 0) {
-        m = ms;
-        break;
-      }
-    }
-    return m;
-  }
-
-  private double doubleOr(JsonNode e, String field, double def) {
-    Double v = doubleVal(e, field);
-    return v != null && v > 0 ? v : def;
-  }
 
   public synchronized void onInstantActionsMessage(JsonNode root) {
     JsonNode actions = root.get("actions");
@@ -522,8 +327,8 @@ public final class SimulationEngine {
       return;
     }
     for (JsonNode a : actions) {
-      String type = text(a, "actionType");
-      String aid = text(a, "actionId");
+      String type = JsonNodes.text(a, "actionType");
+      String aid = JsonNodes.text(a, "actionId");
       if (aid == null || aid.isEmpty()) {
         continue;
       }
@@ -576,7 +381,7 @@ public final class SimulationEngine {
     return o;
   }
 
-  public synchronized ObjectNode buildState(HeaderIds ids) {
+  public synchronized ObjectNode buildState(VdaHeaderIds ids) {
     flushInstantToActionStates();
     ArrayNode actionStates = json.arrayNode();
     for (ObjectNode a : lastActionStates) {
@@ -584,69 +389,30 @@ public final class SimulationEngine {
     }
     lastActionStates.clear();
 
-    ObjectNode root = json.objectNode();
-    root.put("headerId", ids.headerId);
-    root.put("timestamp", java.time.Instant.now().toString());
-    root.put("version", props.simulation.protocolVersion);
-    root.put("manufacturer", props.mqtt.manufacturer);
-    root.put("serialNumber", props.mqtt.serialNumber);
-
-    root.put("orderId", orderId);
-    root.put("orderUpdateId", orderUpdateId);
-    root.put(
-        "lastNodeId",
-        lastNodeId.isEmpty() ? "" : mapNameCodec.toVehicleNodeId(lastNodeId));
-    root.put("lastNodeSequenceId", lastNodeSequenceId);
-    root.set("nodeStates", json.arrayNode());
-    root.set("edgeStates", json.arrayNode());
-    root.put("driving", driving);
-    root.set("actionStates", actionStates);
-
-    ObjectNode battery = json.objectNode();
-    battery.put("batteryCharge", 100.0);
-    battery.put("charging", false);
-    root.set("batteryState", battery);
-
-    root.put("operatingMode", props.simulation.operatingMode);
-
-    root.set("errors", json.arrayNode());
-
-    ObjectNode safety = json.objectNode();
-    safety.put("eStop", "NONE");
-    safety.put("fieldViolation", false);
-    root.set("safetyState", safety);
-
-    ObjectNode pos = json.objectNode();
-    pos.put("x", x);
-    pos.put("y", y);
-    pos.put("theta", theta);
-    // AOS AgvPosition / JSON schema require mapId on every state message
-    pos.put("mapId", effectiveMapIdForJson());
-    pos.put("positionInitialized", true);
-    root.set("agvPosition", pos);
-
-    if (!orderId.isEmpty()) {
-      root.put("orderState", driving ? "ACTIVE" : "ACTIVE");
-    }
-
-    return root;
+    return vdaMessageBuilder.buildState(
+        props,
+        mapNameCodec,
+        ids,
+        orderId,
+        orderUpdateId,
+        lastNodeId,
+        lastNodeSequenceId,
+        driving,
+        actionStates,
+        x,
+        y,
+        theta,
+        effectiveMapIdForJson());
   }
 
-  public synchronized ObjectNode buildVisualization(HeaderIds ids) {
-    ObjectNode root = json.objectNode();
-    root.put("headerId", ids.headerId);
-    root.put("timestamp", java.time.Instant.now().toString());
-    root.put("version", props.simulation.protocolVersion);
-    root.put("manufacturer", props.mqtt.manufacturer);
-    root.put("serialNumber", props.mqtt.serialNumber);
-    ObjectNode pos = json.objectNode();
-    pos.put("x", x);
-    pos.put("y", y);
-    pos.put("theta", theta);
-    pos.put("mapId", effectiveMapIdForJson());
-    pos.put("positionInitialized", true);
-    root.set("agvPosition", pos);
-    return root;
+  public synchronized ObjectNode buildVisualization(VdaHeaderIds ids) {
+    return vdaMessageBuilder.buildVisualization(
+        props,
+        ids,
+        x,
+        y,
+        theta,
+        effectiveMapIdForJson());
   }
 
   /** VDA / AOS schema: {@code agvPosition.mapId} is required; never omit or send blank. */
@@ -657,168 +423,6 @@ public final class SimulationEngine {
     return "default";
   }
 
-  private static String text(JsonNode n, String field) {
-    JsonNode v = n.get(field);
-    return v != null && v.isTextual() ? v.asText() : null;
-  }
-
-  private static Long longVal(JsonNode n, String field) {
-    JsonNode v = n.get(field);
-    if (v == null || v.isNull()) {
-      return 0L;
-    }
-    return v.asLong();
-  }
-
-  private static Double doubleVal(JsonNode n, String field) {
-    JsonNode v = n.get(field);
-    if (v == null || v.isNull()) {
-      return null;
-    }
-    return v.asDouble();
-  }
-
-  private double[] nodeXY(JsonNode node) {
-    JsonNode np = node.get("nodePosition");
-    if (np != null && np.isObject()) {
-      Double px = doubleVal(np, "x");
-      Double py = doubleVal(np, "y");
-      if (px != null && py != null) {
-        Double th = doubleVal(np, "theta");
-        if (th != null) {
-          theta = th;
-        }
-        return new double[] {px, py};
-      }
-    }
-    return new double[] {0.0, 0.0};
-  }
-
-  public record HeaderIds(long headerId) {}
-
   private record InstantActionPending(String actionId, String actionType) {}
 
-  /**
-   * Follows one or more {@link MotionSegment}s. While moving on a segment, {@code lastNodeId} is
-   * the segment start (OpenTCS source point); when the full route completes, {@code lastNodeId} is
-   * the final destination point name.
-   */
-  private static final class RouteFollower {
-    final List<MotionSegment> segments;
-    final List<String> segFrom;
-    final List<String> segTo;
-    final List<Double> speedsMps;
-    final long firstNodeSeq;
-    final long lastNodeSeq;
-
-    double x;
-    double y;
-    double theta;
-    String lastNodeId;
-    long lastNodeSequenceId;
-
-    int segIdx;
-    double posInSegM;
-
-    /** Straight-line single leg (fallback). */
-    static RouteFollower singleStraightLeg(
-        String fromId,
-        String toId,
-        long fromSeq,
-        long toSeq,
-        double x0,
-        double y0,
-        double x1,
-        double y1,
-        double speedMps
-    ) {
-      PointMm p0 = new PointMm(Math.round(x0 * 1000), Math.round(y0 * 1000));
-      PointMm p1 = new PointMm(Math.round(x1 * 1000), Math.round(y1 * 1000));
-      PolylineMotion line = new PolylineMotion(java.util.List.of(p0, p1));
-      return new RouteFollower(
-          java.util.List.of(line),
-          java.util.List.of(fromId),
-          java.util.List.of(toId),
-          java.util.List.of(speedMps),
-          fromSeq,
-          toSeq
-      );
-    }
-
-    RouteFollower(
-        List<MotionSegment> segments,
-        List<String> segFrom,
-        List<String> segTo,
-        List<Double> speedsMps,
-        long firstNodeSeq,
-        long lastNodeSeq
-    ) {
-      if (segments.isEmpty()) {
-        throw new IllegalArgumentException("empty route");
-      }
-      this.segments = segments;
-      this.segFrom = segFrom;
-      this.segTo = segTo;
-      this.speedsMps = speedsMps;
-      this.firstNodeSeq = firstNodeSeq;
-      this.lastNodeSeq = lastNodeSeq;
-    }
-
-    void start() {
-      segIdx = 0;
-      posInSegM = 0;
-      lastNodeSequenceId = firstNodeSeq;
-      refreshPose();
-    }
-
-    /** @return true when entire route finished */
-    boolean advance(double dtSeconds) {
-      double remaining = dtSeconds;
-      while (remaining > 1e-12 && segIdx < segments.size()) {
-        MotionSegment seg = segments.get(segIdx);
-        double speed = speedsMps.get(Math.min(segIdx, speedsMps.size() - 1));
-        if (speed <= 1e-12) {
-          return false;
-        }
-        double len = Math.max(1e-9, seg.lengthMeters());
-        double distLeft = len - posInSegM;
-        double timeToExit = distLeft / speed;
-        if (timeToExit > remaining) {
-          posInSegM += speed * remaining;
-          refreshPose();
-          lastNodeSequenceId = firstNodeSeq;
-          return false;
-        }
-        remaining -= timeToExit;
-        double[] end = seg.sample(len);
-        x = end[0];
-        y = end[1];
-        theta = end[2];
-        lastNodeId = segTo.get(segIdx);
-        segIdx++;
-        posInSegM = 0;
-        if (segIdx >= segments.size()) {
-          lastNodeSequenceId = lastNodeSeq;
-          return true;
-        }
-      }
-      if (segIdx >= segments.size()) {
-        lastNodeSequenceId = lastNodeSeq;
-        return true;
-      }
-      refreshPose();
-      lastNodeSequenceId = firstNodeSeq;
-      return false;
-    }
-
-    void refreshPose() {
-      MotionSegment seg = segments.get(segIdx);
-      double len = seg.lengthMeters();
-      double[] p = seg.sample(Math.min(posInSegM, len));
-      x = p[0];
-      y = p[1];
-      theta = p[2];
-      lastNodeId = segFrom.get(segIdx);
-    }
-  }
 }
