@@ -1,2 +1,3 @@
 # Local plant exports (same content as AOS); keep out of git if large or customer-specific
 *.xml
+!youle-final-1.xml

@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model version="6.0.0" name="youle-new-1">
+    <point name="Action_1_1" positionX="5814" positionY="1520" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5814" positionY="1520" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_1_2" positionX="6030" positionY="5354" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="6030" positionY="5354" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_2_1" positionX="498" positionY="7863" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="498" positionY="7863" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_2_2" positionX="1164" positionY="349" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="1164" positionY="349" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_3_1" positionX="1175" positionY="7116" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="1175" positionY="7116" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_3_2" positionX="588" positionY="816" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="588" positionY="816" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_3_3" positionX="6230" positionY="2245" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="6230" positionY="2245" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_4_1" positionX="5209" positionY="1796" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5209" positionY="1796" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_4_2" positionX="5118" positionY="-3457" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5118" positionY="-3457" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_4_3" positionX="5195" positionY="-8938" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5195" positionY="-8938" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_5_1" positionX="5119" positionY="-8326" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5119" positionY="-8326" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_5_2" positionX="5163" positionY="-5161" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5163" positionY="-5161" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_5_3" positionX="3134" positionY="1116" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="3134" positionY="1116" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_5_4" positionX="1446" positionY="8128" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="1446" positionY="8128" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_6_1" positionX="647" positionY="7672" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="647" positionY="7672" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_6_2" positionX="547" positionY="4414" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="547" positionY="4414" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_6_3" positionX="537" positionY="2849" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="537" positionY="2849" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_7_1" positionX="7153" positionY="-5846" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="7153" positionY="-5846" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_7_2" positionX="7140" positionY="-8455" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="7140" positionY="-8455" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Action_7_3" positionX="5284" positionY="-8560" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5284" positionY="-8560" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_1_1" positionX="6450" positionY="6297" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="6450" positionY="6297" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_2_1" positionX="7016" positionY="-6" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="7016" positionY="-6" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_3_1" positionX="7250" positionY="6695" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="7250" positionY="6695" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_4_1" positionX="10071" positionY="124" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="10071" positionY="124" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_5_1" positionX="11093" positionY="7401" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="11093" positionY="7401" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_6_1" positionX="8340" positionY="461" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="8340" positionY="461" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Play_7_1" positionX="5405" positionY="2215" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <pointLayout positionX="5405" positionY="2215" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_1" positionX="40" positionY="0" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_1"/>
+        <property name="rdsPointId" value="1"/>
+        <pointLayout positionX="40" positionY="0" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_10" positionX="2750" positionY="7320" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_10"/>
+        <property name="rdsPointId" value="10"/>
+        <pointLayout positionX="2750" positionY="7320" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_11" positionX="100" positionY="3754" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_12"/>
+        <property name="rdsPointId" value="11"/>
+        <pointLayout positionX="100" positionY="3754" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_12" positionX="3114" positionY="100" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_13"/>
+        <property name="rdsPointId" value="12"/>
+        <pointLayout positionX="3114" positionY="100" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_13" positionX="6260" positionY="3450" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_14"/>
+        <property name="rdsPointId" value="13"/>
+        <pointLayout positionX="6260" positionY="3450" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_14" positionX="11760" positionY="7220" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_15"/>
+        <property name="rdsPointId" value="14"/>
+        <pointLayout positionX="11760" positionY="7220" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_15" positionX="8234" positionY="8000" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_16"/>
+        <property name="rdsPointId" value="15"/>
+        <pointLayout positionX="8234" positionY="8000" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_16" positionX="5200" positionY="3520" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_17"/>
+        <property name="rdsPointId" value="16"/>
+        <pointLayout positionX="5200" positionY="3520" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_17" positionX="5200" positionY="-1000" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_18"/>
+        <property name="rdsPointId" value="17"/>
+        <pointLayout positionX="5200" positionY="-1000" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_18" positionX="5000" positionY="-7402" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_19"/>
+        <property name="rdsPointId" value="18"/>
+        <pointLayout positionX="5000" positionY="-7402" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_19" positionX="6300" positionY="-9200" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_20"/>
+        <property name="rdsPointId" value="19"/>
+        <pointLayout positionX="6300" positionY="-9200" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_2" positionX="5950" positionY="3450" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_2"/>
+        <property name="rdsPointId" value="2"/>
+        <pointLayout positionX="5950" positionY="3450" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_20" positionX="7400" positionY="-7564" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_21"/>
+        <property name="rdsPointId" value="20"/>
+        <pointLayout positionX="7400" positionY="-7564" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_21" positionX="7200" positionY="-3245" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_22"/>
+        <property name="rdsPointId" value="21"/>
+        <pointLayout positionX="7200" positionY="-3245" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_22" positionX="11760" positionY="100" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_23"/>
+        <property name="rdsPointId" value="22"/>
+        <pointLayout positionX="11760" positionY="100" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_23" positionX="7100" positionY="-2951" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_24"/>
+        <property name="rdsPointId" value="23"/>
+        <pointLayout positionX="7100" positionY="-2951" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_24" positionX="7300" positionY="-7314" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_25"/>
+        <property name="rdsPointId" value="24"/>
+        <pointLayout positionX="7300" positionY="-7314" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_25" positionX="6430" positionY="-9100" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_26"/>
+        <property name="rdsPointId" value="25"/>
+        <pointLayout positionX="6430" positionY="-9100" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_26" positionX="5100" positionY="-7165" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_27"/>
+        <property name="rdsPointId" value="26"/>
+        <pointLayout positionX="5100" positionY="-7165" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_27" positionX="5300" positionY="-2301" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_28"/>
+        <property name="rdsPointId" value="27"/>
+        <pointLayout positionX="5300" positionY="-2301" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_28" positionX="200" positionY="4824" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_29"/>
+        <property name="rdsPointId" value="28"/>
+        <pointLayout positionX="200" positionY="4824" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_29" positionX="3448" positionY="8350" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_30"/>
+        <property name="rdsPointId" value="29"/>
+        <pointLayout positionX="3448" positionY="8350" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_3" positionX="11666" positionY="7320" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_3"/>
+        <property name="rdsPointId" value="3"/>
+        <pointLayout positionX="11666" positionY="7320" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_30" positionX="7230" positionY="7000" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_31"/>
+        <property name="rdsPointId" value="30"/>
+        <pointLayout positionX="7230" positionY="7000" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_31" positionX="11760" positionY="7420" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_32"/>
+        <property name="rdsPointId" value="31"/>
+        <pointLayout positionX="11760" positionY="7420" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_32" positionX="7836" positionY="6900" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_33"/>
+        <property name="rdsPointId" value="32"/>
+        <pointLayout positionX="7836" positionY="6900" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_33" positionX="3065" positionY="8250" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_34"/>
+        <property name="rdsPointId" value="33"/>
+        <pointLayout positionX="3065" positionY="8250" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_34" positionX="200" positionY="6210" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_35"/>
+        <property name="rdsPointId" value="34"/>
+        <pointLayout positionX="200" positionY="6210" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_35" positionX="600" positionY="3621" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_36"/>
+        <property name="rdsPointId" value="35"/>
+        <pointLayout positionX="600" positionY="3621" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_36" positionX="200" positionY="1376" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_37"/>
+        <property name="rdsPointId" value="36"/>
+        <pointLayout positionX="200" positionY="1376" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_37" positionX="2479" positionY="-100" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_38"/>
+        <property name="rdsPointId" value="37"/>
+        <pointLayout positionX="2479" positionY="-100" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_38" positionX="5950" positionY="700" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_39"/>
+        <property name="rdsPointId" value="38"/>
+        <pointLayout positionX="5950" positionY="700" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_39" positionX="11760" positionY="-100" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_40"/>
+        <property name="rdsPointId" value="39"/>
+        <pointLayout positionX="11760" positionY="-100" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_4" positionX="10760" positionY="7320" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_4"/>
+        <property name="rdsPointId" value="4"/>
+        <pointLayout positionX="10760" positionY="7320" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_40" positionX="7000" positionY="-3244" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_41"/>
+        <property name="rdsPointId" value="40"/>
+        <pointLayout positionX="7000" positionY="-3244" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_41" positionX="7200" positionY="-7148" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_42"/>
+        <property name="rdsPointId" value="41"/>
+        <pointLayout positionX="7200" positionY="-7148" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_42" positionX="6199" positionY="-9000" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_43"/>
+        <property name="rdsPointId" value="42"/>
+        <pointLayout positionX="6199" positionY="-9000" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_43" positionX="5200" positionY="-7556" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_44"/>
+        <property name="rdsPointId" value="43"/>
+        <pointLayout positionX="5200" positionY="-7556" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_44" positionX="5400" positionY="-1917" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_45"/>
+        <property name="rdsPointId" value="44"/>
+        <pointLayout positionX="5400" positionY="-1917" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_45" positionX="11668" positionY="7120" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_49"/>
+        <property name="rdsPointId" value="45"/>
+        <pointLayout positionX="11668" positionY="7120" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_46" positionX="5400" positionY="2816" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_46"/>
+        <property name="rdsPointId" value="46"/>
+        <pointLayout positionX="5400" positionY="2816" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_48" positionX="-492" positionY="0" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <property name="rdsPointId" value="48"/>
+        <pointLayout positionX="-492" positionY="0" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_5" positionX="3040" positionY="8550" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_5"/>
+        <property name="rdsPointId" value="5"/>
+        <pointLayout positionX="3040" positionY="8550" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_6" positionX="40" positionY="3450" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_6"/>
+        <property name="rdsPointId" value="6"/>
+        <pointLayout positionX="40" positionY="3450" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_7" positionX="4000" positionY="0" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_7"/>
+        <property name="rdsPointId" value="7"/>
+        <pointLayout positionX="4000" positionY="0" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_8" positionX="11760" positionY="0" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_8"/>
+        <property name="rdsPointId" value="8"/>
+        <pointLayout positionX="11760" positionY="0" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <point name="Point_9" positionX="6500" positionY="3450" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
+        <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <outgoingPath name="Path_9"/>
+        <property name="rdsPointId" value="9"/>
+        <pointLayout positionX="6500" positionY="3450" labelOffsetX="-10" labelOffsetY="-20" layerId="0"/>
+    </point>
+    <path name="Path_1" sourcePoint="Point_1" destinationPoint="Point_2" length="6843" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="1"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_1_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;1;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="25" y="0"/>
+            <controlPoint x="50" y="0"/>
+            <controlPoint x="94" y="0"/>
+            <controlPoint x="119" y="-25"/>
+            <controlPoint x="119" y="-47"/>
+        </pathLayout>
+    </path>
+    <path name="Path_2" sourcePoint="Point_2" destinationPoint="Point_3" length="6903" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="2"/>
+        <property name="agv_play_action_2" value="{&quot;pointName&quot;:&quot;Play_1_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_1_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;1;2#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="119" y="-94"/>
+            <controlPoint x="119" y="-118"/>
+            <controlPoint x="147" y="-146"/>
+            <controlPoint x="196" y="-146"/>
+            <controlPoint x="215" y="-146"/>
+        </pathLayout>
+    </path>
+    <path name="Path_3" sourcePoint="Point_3" destinationPoint="Point_4" length="906" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="3"/>
+        <pathLayout connectionType="BEZIER" layerId="0">
+            <controlPoint x="227" y="-146"/>
+            <controlPoint x="221" y="-146"/>
+        </pathLayout>
+    </path>
+    <path name="Path_4" sourcePoint="Point_4" destinationPoint="Point_5" length="7817" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="4"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="211" y="-146"/>
+            <controlPoint x="206" y="-146"/>
+            <controlPoint x="164" y="-146"/>
+            <controlPoint x="112" y="-171"/>
+            <controlPoint x="70" y="-171"/>
+            <controlPoint x="65" y="-171"/>
+        </pathLayout>
+    </path>
+    <path name="Path_5" sourcePoint="Point_5" destinationPoint="Point_6" length="5917" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="5"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_2_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;2;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="42" y="-171"/>
+            <controlPoint x="23" y="-171"/>
+            <controlPoint x="1" y="-149"/>
+            <controlPoint x="1" y="-111"/>
+            <controlPoint x="1" y="-90"/>
+        </pathLayout>
+    </path>
+    <path name="Path_6" sourcePoint="Point_6" destinationPoint="Point_7" length="5252" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="6"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_2_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;2;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="1" y="-47"/>
+            <controlPoint x="1" y="-25"/>
+            <controlPoint x="26" y="0"/>
+            <controlPoint x="70" y="0"/>
+            <controlPoint x="75" y="0"/>
+        </pathLayout>
+    </path>
+    <path name="Path_7" sourcePoint="Point_7" destinationPoint="Point_8" length="7760" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="7"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Play_2_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <pathLayout connectionType="BEZIER" layerId="0">
+            <controlPoint x="132" y="0"/>
+            <controlPoint x="183" y="0"/>
+        </pathLayout>
+    </path>
+    <path name="Path_8" sourcePoint="Point_8" destinationPoint="Point_9" length="6290" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="8"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="217" y="0"/>
+            <controlPoint x="199" y="0"/>
+            <controlPoint x="155" y="0"/>
+            <controlPoint x="130" y="-25"/>
+            <controlPoint x="130" y="-47"/>
+        </pathLayout>
+    </path>
+    <path name="Path_9" sourcePoint="Point_9" destinationPoint="Point_10" length="5389" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="9"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="130" y="-70"/>
+            <controlPoint x="130" y="-71"/>
+            <controlPoint x="130" y="-119"/>
+            <controlPoint x="103" y="-146"/>
+            <controlPoint x="79" y="-146"/>
+        </pathLayout>
+    </path>
+    <path name="Path_10" sourcePoint="Point_10" destinationPoint="Point_11" length="4443" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="10"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_3_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;3;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="39" y="-146"/>
+            <controlPoint x="23" y="-146"/>
+            <controlPoint x="2" y="-125"/>
+            <controlPoint x="2" y="-93"/>
+            <controlPoint x="2" y="-84"/>
+        </pathLayout>
+    </path>
+    <path name="Path_12" sourcePoint="Point_11" destinationPoint="Point_12" length="4737" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="12"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_3_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;3;2#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="2" y="-69"/>
+            <controlPoint x="2" y="-62"/>
+            <controlPoint x="2" y="-24"/>
+            <controlPoint x="24" y="-2"/>
+            <controlPoint x="43" y="-2"/>
+        </pathLayout>
+    </path>
+    <path name="Path_13" sourcePoint="Point_12" destinationPoint="Point_13" length="4596" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="13"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_3_3&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;3;3#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="82" y="-2"/>
+            <controlPoint x="102" y="-2"/>
+            <controlPoint x="125" y="-25"/>
+            <controlPoint x="125" y="-65"/>
+            <controlPoint x="125" y="-67"/>
+        </pathLayout>
+    </path>
+    <path name="Path_14" sourcePoint="Point_13" destinationPoint="Point_14" length="6668" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="14"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Play_3_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="125" y="-93"/>
+            <controlPoint x="125" y="-117"/>
+            <controlPoint x="153" y="-144"/>
+            <controlPoint x="201" y="-144"/>
+            <controlPoint x="218" y="-144"/>
+        </pathLayout>
+    </path>
+    <path name="Path_15" sourcePoint="Point_14" destinationPoint="Point_15" length="3611" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="15"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="233" y="-144"/>
+            <controlPoint x="231" y="-144"/>
+            <controlPoint x="211" y="-144"/>
+            <controlPoint x="189" y="-160"/>
+            <controlPoint x="169" y="-160"/>
+            <controlPoint x="167" y="-160"/>
+        </pathLayout>
+    </path>
+    <path name="Path_16" sourcePoint="Point_15" destinationPoint="Point_16" length="5411" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="16"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="145" y="-160"/>
+            <controlPoint x="126" y="-160"/>
+            <controlPoint x="104" y="-138"/>
+            <controlPoint x="104" y="-99"/>
+            <controlPoint x="104" y="-85"/>
+        </pathLayout>
+    </path>
+    <path name="Path_17" sourcePoint="Point_16" destinationPoint="Point_17" length="4520" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="17"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_4_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;4;1#&quot;}"/>
+        <pathLayout connectionType="BEZIER" layerId="0">
+            <controlPoint x="104" y="-40"/>
+            <controlPoint x="104" y="-10"/>
+        </pathLayout>
+    </path>
+    <path name="Path_18" sourcePoint="Point_17" destinationPoint="Point_18" length="6405" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="18"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_4_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;4;2#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="104" y="23"/>
+            <controlPoint x="104" y="27"/>
+            <controlPoint x="104" y="57"/>
+            <controlPoint x="100" y="111"/>
+            <controlPoint x="100" y="141"/>
+            <controlPoint x="100" y="145"/>
+        </pathLayout>
+    </path>
+    <path name="Path_19" sourcePoint="Point_18" destinationPoint="Point_19" length="2219" maxVelocity="500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="19"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_4_3&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;4;3#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="100" y="153"/>
+            <controlPoint x="100" y="158"/>
+            <controlPoint x="100" y="175"/>
+            <controlPoint x="109" y="184"/>
+            <controlPoint x="118" y="184"/>
+        </pathLayout>
+    </path>
+    <path name="Path_20" sourcePoint="Point_19" destinationPoint="Point_20" length="1971" maxVelocity="500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="20"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="133" y="184"/>
+            <controlPoint x="140" y="184"/>
+            <controlPoint x="148" y="176"/>
+            <controlPoint x="148" y="162"/>
+            <controlPoint x="148" y="157"/>
+        </pathLayout>
+    </path>
+    <path name="Path_21" sourcePoint="Point_20" destinationPoint="Point_21" length="4324" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="21"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="148" y="149"/>
+            <controlPoint x="148" y="147"/>
+            <controlPoint x="148" y="126"/>
+            <controlPoint x="144" y="91"/>
+            <controlPoint x="144" y="69"/>
+            <controlPoint x="144" y="67"/>
+        </pathLayout>
+    </path>
+    <path name="Path_22" sourcePoint="Point_21" destinationPoint="Point_22" length="5655" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="22"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Play_4_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="144" y="44"/>
+            <controlPoint x="144" y="22"/>
+            <controlPoint x="168" y="-2"/>
+            <controlPoint x="211" y="-2"/>
+            <controlPoint x="223" y="-2"/>
+        </pathLayout>
+    </path>
+    <path name="Path_23" sourcePoint="Point_22" destinationPoint="Point_23" length="5570" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="23"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="219" y="-2"/>
+            <controlPoint x="203" y="-2"/>
+            <controlPoint x="164" y="-2"/>
+            <controlPoint x="142" y="20"/>
+            <controlPoint x="142" y="40"/>
+        </pathLayout>
+    </path>
+    <path name="Path_24" sourcePoint="Point_23" destinationPoint="Point_24" length="4368" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="24"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="142" y="61"/>
+            <controlPoint x="142" y="64"/>
+            <controlPoint x="142" y="85"/>
+            <controlPoint x="146" y="120"/>
+            <controlPoint x="146" y="142"/>
+            <controlPoint x="146" y="144"/>
+        </pathLayout>
+    </path>
+    <path name="Path_25" sourcePoint="Point_24" destinationPoint="Point_25" length="1987" maxVelocity="500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="25"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="146" y="155"/>
+            <controlPoint x="146" y="165"/>
+            <controlPoint x="146" y="176"/>
+            <controlPoint x="140" y="182"/>
+            <controlPoint x="134" y="182"/>
+        </pathLayout>
+    </path>
+    <path name="Path_26" sourcePoint="Point_25" destinationPoint="Point_26" length="2348" maxVelocity="500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="26"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_5_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;5;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="120" y="182"/>
+            <controlPoint x="112" y="182"/>
+            <controlPoint x="102" y="172"/>
+            <controlPoint x="102" y="155"/>
+            <controlPoint x="102" y="149"/>
+        </pathLayout>
+    </path>
+    <path name="Path_27" sourcePoint="Point_26" destinationPoint="Point_27" length="4868" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="27"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_5_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;5;2#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="102" y="141"/>
+            <controlPoint x="102" y="138"/>
+            <controlPoint x="102" y="115"/>
+            <controlPoint x="106" y="75"/>
+            <controlPoint x="106" y="51"/>
+            <controlPoint x="106" y="49"/>
+        </pathLayout>
+    </path>
+    <path name="Path_28" sourcePoint="Point_27" destinationPoint="Point_28" length="8762" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="28"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_5_3&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;5;3#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="106" y="40"/>
+            <controlPoint x="106" y="34"/>
+            <controlPoint x="106" y="-15"/>
+            <controlPoint x="4" y="-35"/>
+            <controlPoint x="4" y="-84"/>
+            <controlPoint x="4" y="-90"/>
+        </pathLayout>
+    </path>
+    <path name="Path_29" sourcePoint="Point_28" destinationPoint="Point_29" length="4794" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="29"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_5_4&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;5;4#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="4" y="-99"/>
+            <controlPoint x="4" y="-102"/>
+            <controlPoint x="4" y="-143"/>
+            <controlPoint x="28" y="-167"/>
+            <controlPoint x="48" y="-167"/>
+        </pathLayout>
+    </path>
+    <path name="Path_30" sourcePoint="Point_29" destinationPoint="Point_30" length="4016" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="30"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="72" y="-167"/>
+            <controlPoint x="74" y="-167"/>
+            <controlPoint x="96" y="-167"/>
+            <controlPoint x="118" y="-140"/>
+            <controlPoint x="139" y="-140"/>
+            <controlPoint x="142" y="-140"/>
+        </pathLayout>
+    </path>
+    <path name="Path_31" sourcePoint="Point_30" destinationPoint="Point_31" length="4549" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="31"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Play_5_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="147" y="-140"/>
+            <controlPoint x="150" y="-140"/>
+            <controlPoint x="173" y="-140"/>
+            <controlPoint x="207" y="-148"/>
+            <controlPoint x="230" y="-148"/>
+            <controlPoint x="233" y="-148"/>
+        </pathLayout>
+    </path>
+    <path name="Path_32" sourcePoint="Point_31" destinationPoint="Point_32" length="3958" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="32"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="233" y="-148"/>
+            <controlPoint x="231" y="-148"/>
+            <controlPoint x="210" y="-148"/>
+            <controlPoint x="182" y="-138"/>
+            <controlPoint x="161" y="-138"/>
+            <controlPoint x="159" y="-138"/>
+        </pathLayout>
+    </path>
+    <path name="Path_33" sourcePoint="Point_32" destinationPoint="Point_33" length="4958" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="33"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="154" y="-138"/>
+            <controlPoint x="151" y="-138"/>
+            <controlPoint x="122" y="-138"/>
+            <controlPoint x="96" y="-165"/>
+            <controlPoint x="67" y="-165"/>
+            <controlPoint x="64" y="-165"/>
+        </pathLayout>
+    </path>
+    <path name="Path_34" sourcePoint="Point_33" destinationPoint="Point_34" length="3517" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="34"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_6_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;6;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="53" y="-165"/>
+            <controlPoint x="45" y="-165"/>
+            <controlPoint x="24" y="-165"/>
+            <controlPoint x="4" y="-145"/>
+            <controlPoint x="4" y="-135"/>
+        </pathLayout>
+    </path>
+    <path name="Path_35" sourcePoint="Point_34" destinationPoint="Point_35" length="2620" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="35"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_6_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;6;2#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="4" y="-123"/>
+            <controlPoint x="4" y="-121"/>
+            <controlPoint x="4" y="-107"/>
+            <controlPoint x="12" y="-89"/>
+            <controlPoint x="12" y="-75"/>
+            <controlPoint x="12" y="-74"/>
+        </pathLayout>
+    </path>
+    <path name="Path_36" sourcePoint="Point_35" destinationPoint="Point_36" length="2280" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="36"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_6_3&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;6;3#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="12" y="-71"/>
+            <controlPoint x="12" y="-70"/>
+            <controlPoint x="12" y="-57"/>
+            <controlPoint x="4" y="-43"/>
+            <controlPoint x="4" y="-30"/>
+            <controlPoint x="4" y="-29"/>
+        </pathLayout>
+    </path>
+    <path name="Path_37" sourcePoint="Point_36" destinationPoint="Point_37" length="2715" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="37"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="4" y="-19"/>
+            <controlPoint x="4" y="-10"/>
+            <controlPoint x="16" y="2"/>
+            <controlPoint x="34" y="2"/>
+            <controlPoint x="42" y="2"/>
+        </pathLayout>
+    </path>
+    <path name="Path_38" sourcePoint="Point_37" destinationPoint="Point_38" length="3562" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="38"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="52" y="2"/>
+            <controlPoint x="54" y="2"/>
+            <controlPoint x="74" y="2"/>
+            <controlPoint x="95" y="-14"/>
+            <controlPoint x="115" y="-14"/>
+            <controlPoint x="117" y="-14"/>
+        </pathLayout>
+    </path>
+    <path name="Path_39" sourcePoint="Point_38" destinationPoint="Point_39" length="5865" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="39"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Play_6_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="122" y="-14"/>
+            <controlPoint x="126" y="-14"/>
+            <controlPoint x="156" y="-14"/>
+            <controlPoint x="198" y="2"/>
+            <controlPoint x="229" y="2"/>
+            <controlPoint x="232" y="2"/>
+        </pathLayout>
+    </path>
+    <path name="Path_40" sourcePoint="Point_39" destinationPoint="Point_40" length="5705" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="40"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="219" y="2"/>
+            <controlPoint x="203" y="2"/>
+            <controlPoint x="163" y="2"/>
+            <controlPoint x="140" y="25"/>
+            <controlPoint x="140" y="45"/>
+        </pathLayout>
+    </path>
+    <path name="Path_41" sourcePoint="Point_40" destinationPoint="Point_41" length="3909" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="41"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_7_1&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;7;1#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="140" y="67"/>
+            <controlPoint x="140" y="69"/>
+            <controlPoint x="140" y="88"/>
+            <controlPoint x="144" y="120"/>
+            <controlPoint x="144" y="139"/>
+            <controlPoint x="144" y="141"/>
+        </pathLayout>
+    </path>
+    <path name="Path_42" sourcePoint="Point_41" destinationPoint="Point_42" length="2105" maxVelocity="500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="42"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_7_2&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;7;2#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="144" y="151"/>
+            <controlPoint x="144" y="160"/>
+            <controlPoint x="144" y="173"/>
+            <controlPoint x="137" y="180"/>
+            <controlPoint x="130" y="180"/>
+        </pathLayout>
+    </path>
+    <path name="Path_43" sourcePoint="Point_42" destinationPoint="Point_43" length="1756" maxVelocity="500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="43"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Action_7_3&quot;,&quot;target&quot;:&quot;alterface&quot;,&quot;action&quot;:&quot;!RCSTrigger1;7;3#&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="118" y="180"/>
+            <controlPoint x="112" y="180"/>
+            <controlPoint x="104" y="172"/>
+            <controlPoint x="104" y="160"/>
+            <controlPoint x="104" y="156"/>
+        </pathLayout>
+    </path>
+    <path name="Path_44" sourcePoint="Point_43" destinationPoint="Point_44" length="5643" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="44"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="104" y="148"/>
+            <controlPoint x="104" y="145"/>
+            <controlPoint x="104" y="118"/>
+            <controlPoint x="108" y="71"/>
+            <controlPoint x="108" y="44"/>
+            <controlPoint x="108" y="41"/>
+        </pathLayout>
+    </path>
+    <path name="Path_45" sourcePoint="Point_44" destinationPoint="Point_46" length="4733" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="45"/>
+        <pathLayout connectionType="BEZIER" layerId="0">
+            <controlPoint x="108" y="7"/>
+            <controlPoint x="108" y="-25"/>
+        </pathLayout>
+    </path>
+    <path name="Path_46" sourcePoint="Point_46" destinationPoint="Point_45" length="7603" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="46"/>
+        <property name="agv_play_action_1" value="{&quot;pointName&quot;:&quot;Play_7_1&quot;,&quot;target&quot;:&quot;vehicle&quot;,&quot;action&quot;:&quot;{\&quot;actionType\&quot;:\&quot;music\&quot;,\&quot;state\&quot;:0}&quot;}"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="108" y="-84"/>
+            <controlPoint x="108" y="-111"/>
+            <controlPoint x="139" y="-142"/>
+            <controlPoint x="194" y="-142"/>
+            <controlPoint x="214" y="-142"/>
+        </pathLayout>
+    </path>
+    <path name="Path_49" sourcePoint="Point_45" destinationPoint="Point_48" length="14091" maxVelocity="1500" maxReverseVelocity="0" locked="false">
+        <property name="rdsSegmentId" value="49"/>
+        <pathLayout connectionType="POLYPATH" layerId="0">
+            <controlPoint x="224" y="-142"/>
+            <controlPoint x="214" y="-142"/>
+            <controlPoint x="124" y="-142"/>
+            <controlPoint x="99" y="0"/>
+            <controlPoint x="9" y="0"/>
+            <controlPoint x="0" y="0"/>
+        </pathLayout>
+    </path>
+    <vehicle name="Vehicle_1" energyLevelCritical="30" energyLevelGood="90" energyLevelFullyRecharged="90" energyLevelSufficientlyRecharged="30" maxVelocity="1000" maxReverseVelocity="1000">
+        <boundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
+        <property name="tcs:preferredAdapterClass" value="com.yeefung.aos.drivers.vehicle.yeefungagvvda5050.CommAdapterFactoryImpl"/>
+        <property name="vehicleId" value="29"/>
+        <property name="vda5050:paused" value="false"/>
+        <vehicleLayout color="#FF0000"/>
+    </vehicle>
+    <visualLayout name="VLayout" scaleX="50.0" scaleY="50.0">
+        <layer id="0" ordinal="0" visible="true" name="Default layer" groupId="0"/>
+        <layerGroup id="0" name="Default layer group" visible="true"/>
+    </visualLayout>
+    <property name="tcs:modelFileLastModified" value="2026-04-05T01:40:51Z"/>
+</model>
